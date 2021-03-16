@@ -1,9 +1,17 @@
 import React from 'react';
 
-function AddTodoButton() {
+type AppProps = { 
+  newTodo: () => void
+};
+
+function AddTodoButton({ newTodo }: AppProps) {
+
+  function createNewTodo() {
+    newTodo();
+  }
 
   return (
-    <button>New Todo</button>
+    <button onClick={createNewTodo}>New Todo</button>
   )
 }
 

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './TodoList.css';
 import TodoItem from './TodoItem';
 import AddTodoButton from './AddTodoButton';
+import { saveTodos } from './storageAPI';
 
 interface Todo {
   label: string
@@ -14,14 +15,22 @@ type AppProps = {
 };
 
 function TodoList({ label, todos } : AppProps) {
-  
+  const [todosArray, setTodosArray] = useState(todos)  
+
+  function addNewTodo() {
+    let newTodosArray = [...todosArray]
+    newTodosArray.push({label: "New item", completed: false});
+    setTodosArray(newTodosArray);
+    saveTodos(newTodosArray);
+  }
+
   return (
     <div className="TodoList">
       <h1>{label}</h1>
-      {todos.length > 0 
-        ? todos.map((i) => <TodoItem label = {i.label} completed = {i.completed} />)
+      {todosArray.length > 0 
+        ? todosArray.map((i) => <TodoItem label = {i.label} completed = {i.completed} />)
         : null}
-      <AddTodoButton />
+      <AddTodoButton newTodo={addNewTodo} />
     </div>
   )
 }
