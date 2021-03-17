@@ -1,5 +1,6 @@
 export interface TodoType {
-  id: number, 
+  id: number,
+  listId: number, 
   label: string, 
   completed: boolean, 
 };
