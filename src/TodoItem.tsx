@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import './TodoItem.css';
+import { TodoType } from './types';
 
-type AppProps = { 
-  label: string, 
-  completed: boolean, 
-};
-
-function TodoItem({ label, completed } : AppProps) {
+function TodoItem({ id, label, completed } : TodoType) {
   const [itemCompleted, setItemCompleted] = useState(completed)
 
   function toggleItem() {

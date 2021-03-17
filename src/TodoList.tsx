@@ -2,33 +2,24 @@ import React, { useState } from 'react';
 import './TodoList.css';
 import TodoItem from './TodoItem';
 import AddTodoButton from './AddTodoButton';
-import { saveTodos } from './storageAPI';
+import { saveTodoListData } from './storageAPI';
+import { TodoListType, TodoType } from './types';
 
-interface Todo {
-  label: string
-  completed: boolean
-}
-
-type AppProps = { 
-  label: string, 
-  todos: Todo[], 
-};
-
-function TodoList({ label, todos } : AppProps) {
-  const [todosArray, setTodosArray] = useState(todos)  
+function TodoList({ id, label, todos, nextId } : TodoListType) {
+  const [todosArray, setTodosArray] = useState<TodoType[]>(todos)  
 
   function addNewTodo() {
-    let newTodosArray = [...todosArray]
-    newTodosArray.push({label: "New item", completed: false});
+    let newTodosArray: TodoType[] = [...todosArray]
+    newTodosArray.push({id: nextId, label: "New item", completed: false});
     setTodosArray(newTodosArray);
-    saveTodos(newTodosArray);
+    saveTodoListData(id, newTodosArray);
   }
 
   return (
     <div className="TodoList">
       <h1>{label}</h1>
       {todosArray.length > 0 
-        ? todosArray.map((i) => <TodoItem label = {i.label} completed = {i.completed} />)
+        ? todosArray.map((i) => <TodoItem id={i.id} label = {i.label} completed = {i.completed} key={i.id} />)
         : null}
       <AddTodoButton newTodo={addNewTodo} />
     </div>

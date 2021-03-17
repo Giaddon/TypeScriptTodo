@@ -1,14 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import AddListButton from './AddListButton';
 import './App.css';
-import { loadTodos } from './storageAPI';
+import { loadAppData, saveAppData } from './storageAPI';
 import TodoList from './TodoList';
+import { AppDataType, TodoListType } from './types';
 
 function App() {
-  const [todosData, setTodosData] = useState(loadTodos())
+  const [appData, setAppData] = useState<AppDataType>(loadAppData())
+
+  function addNewList(): void {
+    let newAppData: AppDataType = {...appData};
+    newAppData.lists.push({label: "New List", todos:[], id: newAppData.nextId, nextId: 0});
+    newAppData.nextId += 1;
+    setAppData(newAppData);
+    saveAppData(newAppData);
+  }
 
   return (
     <div className="App">
-      <TodoList label="A list" todos={todosData} />
+      <AddListButton newList= {addNewList} />
+      {appData.lists.length > 0 
+        ? appData.lists.map((l: TodoListType) => 
+          <TodoList id={l.id} label={l.label} todos={l.todos} nextId={l.nextId} key={l.id} /> )
+        : null}
     </div>
   );
 }
