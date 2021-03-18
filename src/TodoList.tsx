@@ -4,6 +4,7 @@ import TodoItem from './TodoItem';
 import AddTodoButton from './AddTodoButton';
 import { saveListLabel, saveNewTodo } from './storageAPI';
 import { TodoListType, TodoType } from './types';
+import DeleteListButton from './DeleteListButton';
 
 function TodoList({ id, label, todos, nextId } : TodoListType) {
   const [todosArray, setTodosArray] = useState<TodoType[]>(todos);
@@ -26,7 +27,8 @@ function TodoList({ id, label, todos, nextId } : TodoListType) {
 
   return (
     <div className="TodoList">
-      <input 
+      <input
+        className="TodoList-Title" 
         type='text' 
         value={labelText} 
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeLabel(e.currentTarget.value)} 
@@ -36,6 +38,7 @@ function TodoList({ id, label, todos, nextId } : TodoListType) {
           <TodoItem id={i.id} listId={id} label = {i.label} completed = {i.completed} key={i.id} />)
         : null}
       <AddTodoButton newTodo={addNewTodo} />
+      <DeleteListButton />
     </div>
   )
 }

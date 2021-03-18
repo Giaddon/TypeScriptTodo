@@ -1,4 +1,5 @@
 import React from 'react';
+import './AddTodoButton.css';
 
 type AppProps = { 
   newTodo: () => void
@@ -11,7 +12,7 @@ function AddTodoButton({ newTodo }: AppProps) {
   }
 
   return (
-    <button onClick={createNewTodo}>New Todo</button>
+    <button className='AddTodoButton' onClick={createNewTodo}>New Todo</button>
   )
 }
 

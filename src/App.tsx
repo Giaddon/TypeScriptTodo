@@ -19,10 +19,12 @@ function App() {
   return (
     <div className="App">
       <AddListButton newList= {addNewList} />
-      {appData.lists.length > 0 
-        ? appData.lists.map((l: TodoListType) => 
-          <TodoList id={l.id} label={l.label} todos={l.todos} nextId={l.nextId} key={l.id} /> )
-        : null}
+      <div className='ListContainer'>
+        {appData.lists.length > 0 
+          ? appData.lists.map((l: TodoListType) => 
+            <TodoList id={l.id} label={l.label} todos={l.todos} nextId={l.nextId} key={l.id} /> )
+          : null}
+        </div>
     </div>
   );
 }

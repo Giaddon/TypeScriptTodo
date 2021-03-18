@@ -1,4 +1,5 @@
 import React from 'react';
+import './AddListButton.css';
 
 type AppProps = { 
   newList: () => void
@@ -11,7 +12,7 @@ function AddListButton({ newList }: AppProps) {
   }
 
   return (
-    <button onClick={createNewList}>New List</button>
+    <button className='AddListButton' onClick={createNewList}>New List</button>
   )
 }
 

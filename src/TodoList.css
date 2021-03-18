@@ -1,0 +1,17 @@
+.TodoList {
+  position: relative;
+  display: inline-block;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 6px;
+}
+
+.TodoList-Title {
+  border: none;
+  border-bottom: 1px solid black;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 18px;
+}

@@ -1,0 +1,9 @@
+.AddListButton {
+  border: none;
+  background-color: white;
+  border-radius: 3px;
+  font-size: 18px;
+  padding: 5px 20px;
+  margin: 4px;
+  cursor: pointer;
+}

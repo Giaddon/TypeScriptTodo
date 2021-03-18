@@ -1,0 +1,9 @@
+.DeleteListButton {
+  background-color: tomato;
+  border: none;
+  border-radius: 3px;
+  padding: 4px 10px;
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+}
