@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AddListButton from './AddListButton';
 import './App.css';
-import { loadAppData, saveAppData } from './storageAPI';
+import { loadAppData, saveNewList } from './storageAPI';
 import TodoList from './TodoList';
 import { AppDataType, TodoListType } from './types';
 
@@ -9,11 +9,11 @@ function App() {
   const [appData, setAppData] = useState<AppDataType>(loadAppData())
 
   function addNewList(): void {
-    let newAppData: AppDataType = {...appData};
+    let newAppData = {...appData}
     newAppData.lists.push({label: "New List", todos:[], id: newAppData.nextId, nextId: 0});
     newAppData.nextId += 1;
     setAppData(newAppData);
-    saveAppData(newAppData);
+    saveNewList();
   }
 
   return (

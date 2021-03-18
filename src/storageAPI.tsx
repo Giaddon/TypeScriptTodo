@@ -1,13 +1,23 @@
 import { AppDataType, TodoType } from './types';
 
-export function saveAppData(appData: AppDataType): void {
-  let stringData: string = JSON.stringify(appData); 
-  localStorage.setItem('todos', stringData);
+export function saveNewList(): void {
+  let parsedData = parseAppData();
+  if (parsedData) {
+    parsedData.lists.push({label: "New List", todos:[], id: parsedData.nextId, nextId: 0});
+    parsedData.nextId += 1;
+    localStorage.setItem('todos', JSON.stringify(parsedData));
+  }
 }
 
 export function loadAppData(): AppDataType {
   let stringData: string|null = localStorage.getItem('todos');
-  return stringData ? JSON.parse(stringData) : {'lists':[], 'nextId': 0}
+  if (stringData) {
+    return JSON.parse(stringData);
+  } else {
+    let intitialData: AppDataType = {'lists':[], 'nextId': 0};
+    localStorage.setItem('todos', JSON.stringify(intitialData))
+    return intitialData;
+  }
 }
 
 function parseAppData(): AppDataType|undefined {
