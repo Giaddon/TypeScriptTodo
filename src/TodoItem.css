@@ -1,3 +1,8 @@
 .TodoItem {
   margin: 3px 0px;
 }
+
+.disabled {
+  color: grey;
+  text-decoration: line-through;
+}

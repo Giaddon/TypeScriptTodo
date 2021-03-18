@@ -18,16 +18,18 @@ function TodoItem({ id, listId, label, completed } : TodoType) {
   }
 
   return (
-    <div className="TodoItem">
+    <div className='TodoItem'>
       <input 
         type="checkbox" 
         checked={itemCompleted}
         onChange={toggleItem}
       />
       <input 
-        type='text' 
+        type='text'
+        className={itemCompleted ? 'disabled' : ''} 
         value={labelText} 
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeLabel(e.currentTarget.value)} 
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeLabel(e.currentTarget.value)}
+        disabled={itemCompleted ? true : false} 
       />
     </div>
   )

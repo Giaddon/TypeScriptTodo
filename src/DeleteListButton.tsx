@@ -1,10 +1,18 @@
 import React from 'react';
 import './DeleteListButton.css';
 
-function DeleteListButton() {
+type AppProps = { 
+  del: () => void
+};
+
+function DeleteListButton({ del }: AppProps)  {
+
+  function deleteList() {
+    del();
+  }
 
   return (
-    <button className='DeleteListButton'>Delete List</button>
+    <button className='DeleteListButton' onClick={deleteList}>Delete List</button>
   )
 }
 

@@ -9,6 +9,14 @@ export function saveNewList(): void {
   }
 }
 
+export function deleteListFromStorage(id: number) {
+  let parsedData = parseAppData();
+  if (parsedData) {
+    parsedData.lists = parsedData.lists.filter((l) => l.id !== id)
+    localStorage.setItem('todos', JSON.stringify(parsedData));
+  }
+}
+
 export function loadAppData(): AppDataType {
   let stringData: string|null = localStorage.getItem('todos');
   if (stringData) {

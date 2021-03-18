@@ -12,6 +12,14 @@ export interface TodoListType {
   nextId: number,
 }
 
+export interface TodoListComponent {
+  id: number,
+  label: string,
+  todos: TodoType[],
+  nextId: number,
+  del: (id: number) => void,
+}
+
 export interface AppDataType {
   lists: TodoListType[],
   nextId: number,

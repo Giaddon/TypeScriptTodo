@@ -3,10 +3,10 @@ import './TodoList.css';
 import TodoItem from './TodoItem';
 import AddTodoButton from './AddTodoButton';
 import { saveListLabel, saveNewTodo } from './storageAPI';
-import { TodoListType, TodoType } from './types';
+import { TodoListComponent, TodoListType, TodoType } from './types';
 import DeleteListButton from './DeleteListButton';
 
-function TodoList({ id, label, todos, nextId } : TodoListType) {
+function TodoList({ id, label, todos, nextId, del } : TodoListComponent) {
   const [todosArray, setTodosArray] = useState<TodoType[]>(todos);
   const [labelText, setLabelText] = useState<string>(label);
   const [nextIdVal, setNextIdVal] = useState<number>(nextId);  
@@ -25,6 +25,10 @@ function TodoList({ id, label, todos, nextId } : TodoListType) {
     saveListLabel(id, newLabel);
   }
 
+  function deleteList() {
+    del(id);
+  }
+
   return (
     <div className="TodoList">
       <input
@@ -38,7 +42,7 @@ function TodoList({ id, label, todos, nextId } : TodoListType) {
           <TodoItem id={i.id} listId={id} label = {i.label} completed = {i.completed} key={i.id} />)
         : null}
       <AddTodoButton newTodo={addNewTodo} />
-      <DeleteListButton />
+      <DeleteListButton del={deleteList} />
     </div>
   )
 }
