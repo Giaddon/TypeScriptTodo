@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './TodoItem.css';
 import { TodoType } from './types';
-import { saveTodoLabel } from './storageAPI';
+import { saveTodoLabel, saveTodoCompleted } from './storageAPI';
 
 function TodoItem({ id, listId, label, completed } : TodoType) {
   const [itemCompleted, setItemCompleted] = useState(completed)
@@ -9,6 +9,7 @@ function TodoItem({ id, listId, label, completed } : TodoType) {
 
   function toggleItem() {
     setItemCompleted(!itemCompleted);
+    saveTodoCompleted(id, listId, !itemCompleted);
   }
 
   function changeLabel(newLabel: string): void {

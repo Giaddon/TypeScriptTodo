@@ -45,6 +45,17 @@ export function saveTodoLabel(id: number, listId: number, label: string): void {
       }})
     }})
     localStorage.setItem('todos', JSON.stringify(parsedData));
-    console.log('Saved new label: ', label)
+  }
+};
+
+export function saveTodoCompleted(id: number, listId: number, completed: boolean): void {
+  let parsedData = parseAppData();
+  if (parsedData) {
+    parsedData.lists.forEach(list => {if (list.id === listId) {
+      list.todos.forEach(todo => {if (todo.id === id) {
+        todo.completed = completed;
+      }})
+    }})
+    localStorage.setItem('todos', JSON.stringify(parsedData));
   }
 };
