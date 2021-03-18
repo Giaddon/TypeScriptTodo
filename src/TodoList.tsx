@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './TodoList.css';
 import TodoItem from './TodoItem';
 import AddTodoButton from './AddTodoButton';
-import { saveListLabel, saveTodoListData } from './storageAPI';
+import { saveListLabel, saveNewTodo } from './storageAPI';
 import { TodoListType, TodoType } from './types';
 
 function TodoList({ id, label, todos, nextId } : TodoListType) {
@@ -11,11 +11,12 @@ function TodoList({ id, label, todos, nextId } : TodoListType) {
   const [nextIdVal, setNextIdVal] = useState<number>(nextId);  
 
   function addNewTodo(): void {
+    let newTodo: TodoType = {id: nextIdVal, listId: id, label: "New item", completed: false}
     let newTodosArray: TodoType[] = [...todosArray]
-    newTodosArray.push({id: nextIdVal, listId: id, label: "New item", completed: false});
+    newTodosArray.push(newTodo);
     setNextIdVal(nextIdVal + 1);
     setTodosArray(newTodosArray);
-    saveTodoListData(id, newTodosArray);
+    saveNewTodo(id, newTodo);
   }
 
   function changeLabel(newLabel: string): void {
