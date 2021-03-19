@@ -29,6 +29,11 @@ function TodoList({ id, label, todos, nextId, del } : TodoListComponent) {
     del(id);
   }
 
+  function deleteTodo(id: number): void {
+    let newTodos: TodoType[] = todosArray.filter(t => t.id !== id );
+    setTodosArray(newTodos);
+  }
+
   return (
     <div className="TodoList">
       <input
@@ -39,7 +44,7 @@ function TodoList({ id, label, todos, nextId, del } : TodoListComponent) {
       />
       {todosArray.length > 0 
         ? todosArray.map((i) => 
-          <TodoItem id={i.id} listId={id} label = {i.label} completed = {i.completed} key={i.id} />)
+          <TodoItem id={i.id} listId={id} label = {i.label} completed = {i.completed} key={i.id} del={deleteTodo} />)
         : null}
       <AddTodoButton newTodo={addNewTodo} />
       <DeleteListButton del={deleteList} />

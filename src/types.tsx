@@ -5,6 +5,14 @@ export interface TodoType {
   completed: boolean, 
 };
 
+export interface TodoComponent {
+  id: number,
+  listId: number, 
+  label: string, 
+  completed: boolean, 
+  del: (id: number) => void,
+};
+
 export interface TodoListType {
   id: number,
   label: string,

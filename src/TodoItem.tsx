@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './TodoItem.css';
-import { TodoType } from './types';
+import { TodoComponent } from './types';
 import { saveTodoLabel, saveTodoCompleted } from './storageAPI';
 
-function TodoItem({ id, listId, label, completed } : TodoType) {
+function TodoItem({ id, listId, label, completed, del } : TodoComponent) {
   const [itemCompleted, setItemCompleted] = useState(completed)
   const [labelText, setLabelText] = useState<string>(label)
 
@@ -15,6 +15,10 @@ function TodoItem({ id, listId, label, completed } : TodoType) {
   function changeLabel(newLabel: string): void {
     setLabelText(newLabel);
     saveTodoLabel(id, listId, newLabel);
+  }
+
+  function deleteTodo() {
+    del(id);
   }
 
   return (
@@ -31,6 +35,7 @@ function TodoItem({ id, listId, label, completed } : TodoType) {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeLabel(e.currentTarget.value)}
         disabled={itemCompleted ? true : false} 
       />
+      <button className="DeleteTodoButton" onClick={deleteTodo}>X</button>
     </div>
   )
 }
