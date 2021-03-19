@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './TodoList.css';
 import TodoItem from './TodoItem';
 import AddTodoButton from './AddTodoButton';
-import { saveListLabel, saveNewTodo } from './storageAPI';
+import { deleteTodoFromStorage, saveListLabel, saveNewTodo } from './storageAPI';
 import { TodoListComponent, TodoListType, TodoType } from './types';
 import DeleteListButton from './DeleteListButton';
 
@@ -29,9 +29,10 @@ function TodoList({ id, label, todos, nextId, del } : TodoListComponent) {
     del(id);
   }
 
-  function deleteTodo(id: number): void {
-    let newTodos: TodoType[] = todosArray.filter(t => t.id !== id );
+  function deleteTodo(listId: number, todoId: number): void {
+    let newTodos: TodoType[] = todosArray.filter(t => t.id !== todoId );
     setTodosArray(newTodos);
+    deleteTodoFromStorage(listId, todoId);
   }
 
   return (

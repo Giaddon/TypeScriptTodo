@@ -17,6 +17,16 @@ export function deleteListFromStorage(id: number) {
   }
 }
 
+export function deleteTodoFromStorage(listId: number, todoId: number) {
+  let parsedData = parseAppData();
+  if (parsedData) {
+    parsedData.lists.forEach(list => {if (list.id === listId) {
+      list.todos = list.todos.filter(todo => todo.id !== todoId)
+    }});
+    localStorage.setItem('todos', JSON.stringify(parsedData));
+  }
+}
+
 export function loadAppData(): AppDataType {
   let stringData: string|null = localStorage.getItem('todos');
   if (stringData) {

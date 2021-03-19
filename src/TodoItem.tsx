@@ -18,7 +18,7 @@ function TodoItem({ id, listId, label, completed, del } : TodoComponent) {
   }
 
   function deleteTodo() {
-    del(id);
+    del(listId, id);
   }
 
   return (

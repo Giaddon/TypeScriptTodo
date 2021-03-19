@@ -10,7 +10,7 @@ export interface TodoComponent {
   listId: number, 
   label: string, 
   completed: boolean, 
-  del: (id: number) => void,
+  del: (listId: number, todoId: number) => void,
 };
 
 export interface TodoListType {
