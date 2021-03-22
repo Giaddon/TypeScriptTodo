@@ -35,7 +35,7 @@ function TodoItem({ id, listId, label, completed, del } : TodoComponent) {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeLabel(e.currentTarget.value)}
         disabled={itemCompleted ? true : false} 
       />
-      <button className="DeleteTodoButton" onClick={deleteTodo}>X</button>
+      <button aria-label="delete item" className="DeleteTodoButton" onClick={deleteTodo}>X</button>
     </div>
   )
 }
