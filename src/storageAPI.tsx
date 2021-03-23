@@ -5,25 +5,25 @@ export function saveNewList(): void {
   if (parsedData) {
     parsedData.lists.push({label: "New List", todos:[], id: parsedData.nextId, nextId: 0});
     parsedData.nextId += 1;
-    localStorage.setItem('todos', JSON.stringify(parsedData));
+    saveAppData(JSON.stringify(parsedData));
   }
 }
 
-export function deleteListFromStorage(id: number) {
+export function deleteListFromStorage(id: number): void {
   let parsedData = parseAppData();
   if (parsedData) {
     parsedData.lists = parsedData.lists.filter((l) => l.id !== id)
-    localStorage.setItem('todos', JSON.stringify(parsedData));
+    saveAppData(JSON.stringify(parsedData));
   }
 }
 
-export function deleteTodoFromStorage(listId: number, todoId: number) {
+export function deleteTodoFromStorage(listId: number, todoId: number): void {
   let parsedData = parseAppData();
   if (parsedData) {
     parsedData.lists.forEach(list => {if (list.id === listId) {
       list.todos = list.todos.filter(todo => todo.id !== todoId)
     }});
-    localStorage.setItem('todos', JSON.stringify(parsedData));
+    saveAppData(JSON.stringify(parsedData));
   }
 }
 
@@ -43,14 +43,18 @@ function parseAppData(): AppDataType|undefined {
   if (stringData) return JSON.parse(stringData);
 }
 
-export function saveNewTodo(id: number, newTodo: TodoType) {
+function saveAppData(data: string): void {
+  localStorage.setItem('todos', data);
+}
+
+export function saveNewTodo(id: number, newTodo: TodoType): void {
   let parsedData = parseAppData();
   if (parsedData) {
     parsedData.lists.forEach(list => {if (list.id === id) {
       list.todos.push(newTodo);
       list.nextId += 1;
     }})
-    localStorage.setItem('todos', JSON.stringify(parsedData));
+    saveAppData(JSON.stringify(parsedData));
   }
 };
 
@@ -60,7 +64,7 @@ export function saveListLabel(id: number, label: string): void {
     parsedData.lists.forEach(list => {if (list.id === id) {
       list.label = label;
     }})
-    localStorage.setItem('todos', JSON.stringify(parsedData));
+    saveAppData(JSON.stringify(parsedData));
   }
 };
 
@@ -72,7 +76,7 @@ export function saveTodoLabel(id: number, listId: number, label: string): void {
         todo.label = label;
       }})
     }})
-    localStorage.setItem('todos', JSON.stringify(parsedData));
+    saveAppData(JSON.stringify(parsedData));
   }
 };
 
@@ -84,6 +88,6 @@ export function saveTodoCompleted(id: number, listId: number, completed: boolean
         todo.completed = completed;
       }})
     }})
-    localStorage.setItem('todos', JSON.stringify(parsedData));
+    saveAppData(JSON.stringify(parsedData));
   }
 };
