@@ -1,3 +1,5 @@
+/** Item for individual todo component, includes a checkbox, label, and delete button. */
+
 import React, { useState } from 'react';
 import './TodoItem.css';
 import { TodoComponent } from './types';
