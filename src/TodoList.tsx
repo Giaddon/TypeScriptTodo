@@ -3,20 +3,32 @@ import './TodoList.css';
 import TodoItem from './TodoItem';
 import AddTodoButton from './AddTodoButton';
 import { deleteTodoFromStorage, saveListLabel, saveNewTodo } from './storageAPI';
-import { TodoListComponent, TodoListType, TodoType } from './types';
+import { TodoListComponent, TodoType } from './types';
 import DeleteListButton from './DeleteListButton';
 
+/**
+ * App
+ *  - ListManager
+ *    - add and delete list logic
+ *    - ListContainer
+ *      - Lists
+ *         - TodoManager
+ *         - Todos 
+ * 
+ */
+
+
 function TodoList({ id, label, todos, nextId, del } : TodoListComponent) {
-  const [todosArray, setTodosArray] = useState<TodoType[]>(todos);
+  const [todosMap, setTodosMap] = useState<Map<number, TodoType>>(todos);
   const [labelText, setLabelText] = useState<string>(label);
   const [nextIdVal, setNextIdVal] = useState<number>(nextId);  
 
   function addNewTodo(): void {
     let newTodo: TodoType = {id: nextIdVal, listId: id, label: "New item", completed: false}
-    let newTodosArray: TodoType[] = [...todosArray]
-    newTodosArray.push(newTodo);
+    let newTodosMap: Map<number, TodoType> = {...todosMap}
+    newTodosMap.set(nextIdVal, newTodo);
     setNextIdVal(nextIdVal + 1);
-    setTodosArray(newTodosArray);
+    setTodosMap(newTodosMap);
     saveNewTodo(id, newTodo);
   }
 
@@ -30,10 +42,13 @@ function TodoList({ id, label, todos, nextId, del } : TodoListComponent) {
   }
 
   function deleteTodo(listId: number, todoId: number): void {
-    let newTodos: TodoType[] = todosArray.filter(t => t.id !== todoId );
-    setTodosArray(newTodos);
+    let newTodos: Map<number, TodoType> = {...todosMap};
+    newTodos.delete(todoId);
+    setTodosMap(newTodos);
     deleteTodoFromStorage(listId, todoId);
   }
+
+  let todosArray: TodoType[]|null = todosMap.size > 0 ? Array.from(todosMap.values()) : null; 
 
   return (
     <div className="TodoList">
@@ -43,7 +58,7 @@ function TodoList({ id, label, todos, nextId, del } : TodoListComponent) {
         value={labelText} 
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeLabel(e.currentTarget.value)} 
       />
-      {todosArray.length > 0 
+      {todosArray 
         ? todosArray.map((i) => 
           <TodoItem id={i.id} listId={id} label = {i.label} completed = {i.completed} key={i.id} del={deleteTodo} />)
         : null}

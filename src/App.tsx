@@ -6,14 +6,14 @@ import {
   loadAppData, 
   saveNewList } from './storageAPI';
 import TodoList from './TodoList';
-import { AppDataType, TodoListType, } from './types';
+import { AppDataType, TodoListComponent, TodoListType, } from './types';
 
 function App() {
   const [appData, setAppData] = useState<AppDataType>(loadAppData())
-
+// differentiate variable names for lists and todos
   function addNewList(): void {
     let newAppData = {...appData}
-    newAppData.lists.push({label: "New List", todos:[], id: newAppData.nextId, nextId: 0});
+    newAppData.lists.set(newAppData.nextId, {label: "New List", todos:new Map(), id: newAppData.nextId, nextId: 0});
     newAppData.nextId += 1;
     setAppData(newAppData);
     saveNewList();
@@ -21,17 +21,19 @@ function App() {
 
   function deleteList(id: number): void {
     let newAppData = {...appData}
-    newAppData.lists = newAppData.lists.filter((l) => l.id !== id)
+    newAppData.lists.delete(id);
     setAppData(newAppData);
     deleteListFromStorage(id);
   }
+
+  let listArray: TodoListType[]|null = appData.lists.size > 0 ? Array.from(appData.lists.values()) : null;  
 
   return (
     <div className="App">
       <AddListButton newList= {addNewList} />
       <div className='ListContainer'>
-        {appData.lists.length > 0 
-          ? appData.lists.map((l: TodoListType) => 
+        {listArray 
+          ? listArray.map((l: TodoListType) => 
             <TodoList id={l.id} label={l.label} todos={l.todos} nextId={l.nextId} key={l.id} del={deleteList} /> )
           : null}
         </div>
