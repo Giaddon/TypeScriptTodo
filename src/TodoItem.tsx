@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import './TodoItem.css';
 import { TodoComponent } from './types';
-import { saveTodoLabel, saveTodoCompleted } from './storageAPI';
+import StorageAPI from './storageAPI';
 
 function TodoItem({ id, listId, label, completed, del } : TodoComponent) {
   const [itemCompleted, setItemCompleted] = useState(completed)
@@ -11,12 +11,12 @@ function TodoItem({ id, listId, label, completed, del } : TodoComponent) {
 
   function toggleItem() {
     setItemCompleted(!itemCompleted);
-    saveTodoCompleted(id, listId, !itemCompleted);
+    //saveTodoCompleted(id, listId, !itemCompleted);
   }
 
   function changeLabel(newLabel: string): void {
     setLabelText(newLabel);
-    saveTodoLabel(id, listId, newLabel);
+    //saveTodoLabel(id, listId, newLabel);
   }
 
   function deleteTodo() {

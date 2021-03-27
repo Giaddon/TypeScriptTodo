@@ -1,3 +1,8 @@
+export interface AppDataType {
+  lists: {[id:number]: TodoListType}
+  nextId: number,
+}
+
 export interface TodoType {
   id: number,
   listId: number, 
@@ -16,19 +21,16 @@ export interface TodoComponent {
 export interface TodoListType {
   id: number,
   label: string,
-  todos: Map<number, TodoType>,
+  todos: {[id:number]: TodoType},
   nextId: number,
 }
 
 export interface TodoListComponent {
   id: number,
   label: string,
-  todos: Map<number, TodoType>,
+  todos: {[id:number]: TodoType}
   nextId: number,
-  del: (id: number) => void,
+  updateListLabel: (id: number, label: string) => void,
+  deleteList: (id: number) => void,
 }
 
-export interface AppDataType {
-  lists: Map<number, TodoListType>
-  nextId: number,
-}

@@ -2,17 +2,17 @@ import React from 'react';
 import './DeleteListButton.css';
 
 type AppProps = { 
-  del: () => void
+  deleteList: () => void
 };
 
-function DeleteListButton({ del }: AppProps)  {
+function DeleteListButton({ deleteList }: AppProps)  {
 
-  function deleteList() {
-    del();
+  function callDeleteList() {
+    deleteList();
   }
 
   return (
-    <button className='DeleteListButton' onClick={deleteList}>Delete List</button>
+    <button className='DeleteListButton' onClick={callDeleteList}>Delete List</button>
   )
 }
 
