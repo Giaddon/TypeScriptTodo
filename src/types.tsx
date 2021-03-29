@@ -10,12 +10,12 @@ export interface TodoType {
   completed: boolean, 
 };
 
-export interface TodoComponent {
+export interface TodoProps {
   id: number,
   listId: number, 
   label: string, 
   completed: boolean, 
-  del: (listId: number, todoId: number) => void,
+  deleteTodo: (listId: number, todoId: number) => void,
 };
 
 export interface TodoListType {
@@ -25,12 +25,11 @@ export interface TodoListType {
   nextId: number,
 }
 
-export interface TodoListComponent {
+export interface TodoListProps {
   id: number,
   label: string,
   todos: {[id:number]: TodoType}
   nextId: number,
-  updateListLabel: (id: number, label: string) => void,
   deleteList: (id: number) => void,
 }
 

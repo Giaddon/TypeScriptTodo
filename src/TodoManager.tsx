@@ -1,36 +1,32 @@
-import React, { useState, useEffect } from 'react';
+/** Container component that holds top-level app data and renders the todo lists. */
+
+import React, { useState } from 'react';
 import AddListButton from './AddListButton';
 import TodoList from './TodoList';
 import StorageAPI from './storageAPI';
-import { AppDataType, TodoListType, TodoType } from './types';
+import { AppDataType, TodoListType } from './types';
 
 function TodoManager() {
   const [appData, setAppData] = useState(StorageAPI.loadAppData());
 
-  useEffect(function saveDataToStorage() {
-    localStorage.setItem('todos', JSON.stringify(appData));
-  }, [appData])
-
   function addNewList(): void {
     let newAppData: AppDataType = {...appData};
-    newAppData.lists[appData.nextId] = {label: "New List", todos:{}, id: appData.nextId, nextId: 0}
+    let newList = {label: "New List", todos:{}, id: appData.nextId, nextId: 0};
+    newAppData.lists[appData.nextId] = newList; 
     newAppData.nextId += 1;
     setAppData(newAppData);
+    StorageAPI.saveNewList(newList);
   }
 
   function deleteList(id: number): void {
     let newAppData: AppDataType = {...appData};
     delete newAppData.lists[id];
     setAppData(newAppData)
+    StorageAPI.deleteList(id);
   }
 
-  function updateListLabel(listId:number, label:string): void {
-    let newAppData: AppDataType = {...appData};
-    newAppData.lists[listId].label = label;
-    setAppData(newAppData)
-  }
-
-  let listArray: TodoListType[] = Object.values(appData.lists);
+  let listArray: TodoListType[] = Object.values(appData.lists)
+  listArray.sort((a, b) => a.id - b.id);
 
   return (
     <div>
@@ -45,7 +41,7 @@ function TodoManager() {
               nextId={l.nextId} 
               key={l.id} 
               deleteList={deleteList}
-              updateListLabel={updateListLabel} /> )
+              /> )
           : null}
         </div>
     </div>

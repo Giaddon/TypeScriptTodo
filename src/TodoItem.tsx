@@ -2,25 +2,25 @@
 
 import React, { useState } from 'react';
 import './TodoItem.css';
-import { TodoComponent } from './types';
+import { TodoProps } from './types';
 import StorageAPI from './storageAPI';
 
-function TodoItem({ id, listId, label, completed, del } : TodoComponent) {
-  const [itemCompleted, setItemCompleted] = useState(completed)
-  const [labelText, setLabelText] = useState<string>(label)
+function TodoItem({ id, listId, label, completed, deleteTodo } : TodoProps) {
+  const [labelText, setLabelText] = useState<string>(label);
+  const [itemCompleted, setItemCompleted] = useState<boolean>(completed)
 
   function toggleItem() {
     setItemCompleted(!itemCompleted);
-    //saveTodoCompleted(id, listId, !itemCompleted);
+    StorageAPI.saveTodoCompleted(listId, id, !itemCompleted);
   }
 
   function changeLabel(newLabel: string): void {
     setLabelText(newLabel);
-    //saveTodoLabel(id, listId, newLabel);
+    StorageAPI.saveTodoLabel(listId, id, newLabel);
   }
 
-  function deleteTodo() {
-    del(listId, id);
+  function callDeleteTodo() {
+    deleteTodo(listId, id);
   }
 
   return (
@@ -37,7 +37,7 @@ function TodoItem({ id, listId, label, completed, del } : TodoComponent) {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeLabel(e.currentTarget.value)}
         disabled={itemCompleted ? true : false} 
       />
-      <button aria-label="delete item" className="DeleteTodoButton" onClick={deleteTodo}>X</button>
+      <button aria-label="delete item" className="DeleteTodoButton" onClick={callDeleteTodo}>X</button>
     </div>
   )
 }
