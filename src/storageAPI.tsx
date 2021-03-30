@@ -1,3 +1,5 @@
+/** Helper class with static functions for managing the persistent browser storage. */
+
 import { AppDataType, TodoListType, TodoType } from './types';
 
 class StorageAPI {

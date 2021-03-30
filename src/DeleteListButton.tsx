@@ -1,3 +1,5 @@
+/** Button for deleting todo lists. */
+
 import React from 'react';
 import './DeleteListButton.css';
 

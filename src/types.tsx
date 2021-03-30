@@ -32,4 +32,3 @@ export interface TodoListProps {
   nextId: number,
   deleteList: (id: number) => void,
 }
-

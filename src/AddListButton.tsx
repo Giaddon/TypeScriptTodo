@@ -1,3 +1,5 @@
+/** Button to add a new todo list. */
+
 import React from 'react';
 import './AddListButton.css';
 
